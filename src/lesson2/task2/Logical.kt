@@ -59,12 +59,7 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    var count = 0
-    if (min(r, s) >= a || min(r, s) >= b || min(r, s) >= c)
-        count = count + 1
-    if (max(r, s) >= a || max(r, s) >= b || max(r, s) >= c)
-        count = count + 1
-    if (count == 2)
+    if (((r >= a) && (s >= b)) || ((r >= a) && (s >= c)) || ((r >= b) && (s >= a)) || ((r >= b) && (s >= c)) || ((r >= c) && (s >= a)) || ((r >= c) && (s >= b)))
         return true
     else
         return false
