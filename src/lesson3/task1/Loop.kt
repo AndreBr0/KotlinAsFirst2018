@@ -132,7 +132,20 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int) {
+    var n = x
+    var c = 0
+    while (n != 1) {
+        if (n % 2 == 1) {
+            n = (3 * n) + 1
+            c++
+        } else {
+            n = n / 2
+            c++
+        }
+    }
+    print(c)
+}
 
 /**
  * Средняя
@@ -177,10 +190,7 @@ fun isPalindrome(n: Int): Boolean {
         c = c * 10 + a % 10
         a = a / 10
     }
-    if (n == c)
-        return true
-    else
-        return false
+    if (n == c) return true else return false
 }
 
 /**
