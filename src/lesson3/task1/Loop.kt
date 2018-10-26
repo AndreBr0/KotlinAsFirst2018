@@ -212,7 +212,33 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var nomer = 0
+    var stepen = 0
+    var kvadrat = 0
+    var chislo = 0
+    var x = 0
+    var f = 0
+    while (x < n) {
+        f = 1
+        stepen = 10
+        chislo++
+        kvadrat = chislo * chislo
+        while (kvadrat / stepen != 0) {
+            stepen = stepen * 10
+            f++
+        }
+        x = x + f
+    }
+    x = x - f
+    stepen = (stepen / 10)
+    while (x != n) {
+        x++
+        nomer = (kvadrat / stepen % 10)
+        stepen = (stepen / 10)
+    }
+    return nomer
+}
 
 /**
  * Сложная
