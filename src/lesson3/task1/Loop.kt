@@ -190,7 +190,7 @@ fun isPalindrome(n: Int): Boolean {
         c = c * 10 + a % 10
         a = a / 10
     }
-    if (n == c) return true else return false
+    return n == c
 }
 
 /**
