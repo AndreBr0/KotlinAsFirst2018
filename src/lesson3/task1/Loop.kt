@@ -132,19 +132,18 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int) {
+fun collatzSteps(x: Int): Int {
     var n = x
     var c = 0
     while (n != 1) {
-        if (n % 2 == 1) {
-            n = (3 * n) + 1
-            c++
+        if (n % 2 == 0) {
+            n /= 2
         } else {
-            n = n / 2
-            c++
+            n = n * 3 + 1
         }
+        c++
     }
-    print(c)
+    return c
 }
 
 /**
@@ -213,31 +212,31 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var nomer = 0
-    var stepen = 0
-    var kvadrat = 0
-    var chislo = 0
-    var x = 0
-    var f = 0
-    while (x < n) {
-        f = 1
-        stepen = 10
+    var nomer = 0.0
+    var stepen = 0.0
+    var kvadrat = 0.0
+    var chislo = 0.0
+    var x = 0.0
+    var f = 0.0
+    while (x < n.toDouble()) {
+        f = 1.0
+        stepen = 10.0
         chislo++
         kvadrat = chislo * chislo
-        while (kvadrat / stepen != 0) {
-            stepen = stepen * 10
+        while (kvadrat.toInt() / stepen.toInt() != 0) {
+            stepen *= 10.0
             f++
         }
-        x = x + f
+        x += f
     }
-    x = x - f
-    stepen = (stepen / 10)
-    while (x != n) {
+    x -= f
+    stepen = (stepen / 10.0)
+    while (x != n.toDouble()) {
         x++
-        nomer = (kvadrat / stepen % 10)
-        stepen = (stepen / 10)
+        nomer = (kvadrat / stepen % 10.0)
+        stepen = (stepen / 10.0)
     }
-    return nomer
+    return nomer.toInt()
 }
 
 /**

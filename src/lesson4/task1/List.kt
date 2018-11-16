@@ -122,12 +122,7 @@ fun abs(v: List<Double>): Double = TODO()
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double {
-    if ((list.sum() / list.size)> 0)
-        return (list.sum() / list.size)
-    else
-        return 0.0
-}
+fun mean(list: List<Double>): Double = if (list.isEmpty()) 0.0 else list.sum() / list.size
 
 /**
  * Средняя
@@ -236,19 +231,19 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    var rim = listOf("I","IV","V","IX","X","XL","L","XC","C","CD","D","CM","M")
-    var arab = listOf(1,4,5,9,10,40,50,90,100,400,500,900,1000)
+    val rim = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
+    val arab = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
     var q = ""
     var k = n
     while (k / 1000 > 0) {
-        k = k - arab[12]
-        q =q + rim[12]
+        k -= arab[12]
+        q += rim[12]
     }
     while (k > 0) {
         for (i in 0 until arab.size) {
             if (k < arab[i]) {
-                k = k - arab[i - 1]
-                q = q + rim[i - 1]
+                k -= arab[i - 1]
+                q += rim[i - 1]
                 break
             }
         }
