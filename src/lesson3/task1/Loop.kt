@@ -230,11 +230,11 @@ fun squareSequenceDigit(n: Int): Int {
         x += f
     }
     x -= f
-    stepen = (stepen / 10.0)
+    stepen /= 10.0
     while (x != n.toDouble()) {
         x++
-        nomer = (kvadrat / stepen % 10.0)
-        stepen = (stepen / 10.0)
+        nomer = kvadrat / stepen % 10.0
+        stepen /= 10.0
     }
     return nomer.toInt()
 }
