@@ -198,6 +198,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>): Unit = TO
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> =
         (a.intersect(b)).toList()
+
 /**
  * Средняя
  *
@@ -285,4 +286,31 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    if (treasures.isEmpty())
+        return setOf()
+    var otv = setOf<String>()
+    val zag = treasures.keys.toList()
+    val ves = treasures.values.map { it.first }.toList()
+    val st = treasures.values.map { it.second }.toList()
+    val cen: Array<Array<Int>> = Array(treasures.size + 1) { Array(capacity + 1) { 0 } }
+    for (i in 1..treasures.size)
+        for (j in 1..capacity)
+            if (ves[i - 1] <= j)
+                cen[i][j] = maxOf(cen[i - 1][j], cen[i - 1][j - ves[i - 1]] + st[i - 1])
+            else
+                cen[i][j] = cen[i - 1][j]
+    fun optimal(a: Int, b: Int) {
+        if (cen[a][b] == 0) return
+        if (cen[a - 1][b] == cen[a][b])
+            optimal(a - 1, b)
+        else {
+            optimal(a - 1, b - ves[a - 1])
+            otv += zag[a - 1]
+        }
+    }
+    optimal(treasures.size, capacity)
+    return otv
+}
+
+
