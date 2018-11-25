@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
 
+import kotlin.math.*
 import kotlin.math.sqrt
 
 /**
@@ -66,7 +67,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var f = 0
+    var q = abs(n)
+    do {
+        f++
+        q /= 10
+    } while (q > 0)
+    return f
+}
 
 /**
  * Простая
@@ -248,4 +257,22 @@ fun squareSequenceDigit(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var a = 0
+    var i = 1
+    var b = 0
+    var result = -1
+    var c = 0
+    while (a != n) {
+        c = fib(i)
+        b = digitNumber(c)
+        if (n - a <= b) {
+            result = (c / 10.0.pow(b - (n - a)) % 10).toInt()
+            break
+        } else {
+            a += b
+            i++
+        }
+    }
+    return result
+}
