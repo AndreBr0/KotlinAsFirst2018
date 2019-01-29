@@ -129,7 +129,8 @@ fun bestHighJump(jumps: String): Int {
             if (k[i].contains("+"))
                 rez.add(k[i - 1].toInt())
         }
-        rez.max()!!.toInt()
+        if (rez.isEmpty()) -1
+        else rez.max()!!.toInt()
     } else
         -1
 }
