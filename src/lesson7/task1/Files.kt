@@ -450,7 +450,7 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
         count *= 10
     }
     spisok.reverse()
-    val kolvo = (spisok[0] * 10.0.pow((rhv.toString().length - 1).toDouble()).toInt() * lhv).toString().length + 1
+    val kolvo = (spisok[0] * 10.0.pow((rhv.toString().length - 1).toDouble()).toInt() * lhv).toString().length + 2
     build.append(loopAdd(' ', kolvo - lhv.toString().length) + lhv.toString() + "\n")
     build.append("*" + loopAdd(' ', kolvo - rhv.toString().length - 1) + rhv.toString() + "\n")
     build.append(loopAdd('-', kolvo) + "\n")
