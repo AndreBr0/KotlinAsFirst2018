@@ -1,7 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
 
 package lesson7.task1
-
+import kotlin.math.*
 import java.io.File
 
 /**
@@ -429,7 +429,50 @@ fun markdownToHtml(inputName: String, outputName: String) {
  *
  */
 fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    val build = StringBuilder()
+    fun loopAdd(char: Char, loop: Int): String {
+        val builder = StringBuilder()
+        var a = loop
+        if (loop == 0) return ""
+        while (a > 0) {
+            builder.append(char)
+            a--
+        }
+        return builder.toString()
+    }
+
+    val spisok = mutableListOf<Int>()
+    var count = 10
+    spisok.add(rhv % count)
+    while (rhv / count > 0) {
+        spisok.add(rhv / count % 10)
+        count *= 10
+    }
+    spisok.reverse()
+    val kolvo = (spisok[0] * 10.0.pow((rhv.toString().length - 1).toDouble()).toInt() * lhv).toString().length + 1
+    build.append(loopAdd(' ', kolvo - lhv.toString().length) + lhv.toString() + "\n")
+    build.append("*" + loopAdd(' ', kolvo - rhv.toString().length - 1) + rhv.toString() + "\n")
+    build.append(loopAdd('-', kolvo) + "\n")
+    var b = rhv.toString().length
+    var counter = 0
+    var spisokSize = spisok.size
+    var x = false
+    while (b > 0) {
+        if (b != rhv.toString().length) {
+            build.append('+')
+            x = true
+        }
+        if (x) build.append(loopAdd(' ', kolvo - (spisok[spisokSize - 1] * lhv).toString().length - counter - 1) + (spisok[spisokSize - 1] * lhv).toString() + "\n")
+        else build.append(loopAdd(' ', kolvo - (spisok[spisokSize - 1] * lhv).toString().length - counter) + (spisok[spisokSize - 1] * lhv).toString() + "\n")
+        b--
+        counter++
+        spisokSize--
+    }
+    build.append(loopAdd('-', kolvo) + "\n")
+    build.append(loopAdd(' ', kolvo - (lhv * rhv).toString().length) + (lhv * rhv).toString())
+    writer.write(build.toString())
+    writer.close()
 }
 
 
