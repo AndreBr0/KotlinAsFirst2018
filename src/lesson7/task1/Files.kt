@@ -503,18 +503,19 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     val lhvs = lhv.toString()               // lnh в виде строки
 
     /** Рассматриваем отдельно вариант, res - однозначное число **/
-    if (res < 10) {
-        outputStream.write(" $lhv | $rhv")                  // Просто сразу выписываем ответ в нужном формате
+    if (res < 10) {                                 // Просто сразу выписываем ответ в нужном формате
+        outputStream.write(" $lhv | $rhv")                      // Первая строка
         outputStream.newLine()
         val lenght = 1 + lhvs.length
         var str = "-" + (rhv * res).toString()
         str = str.padEnd(lenght + 3) + "$res"
-        outputStream.write(str)
+        outputStream.write(str)                                 // Вторая строка
         outputStream.newLine()
         str = "".padStart(max(lhvs.length, (rhv * res).toString().length + 1), '-')
-        outputStream.write(str)
+        outputStream.write(str)                                 // Третья строка
         outputStream.newLine()
-        outputStream.write(" $ost")
+        str = "$ost".padStart(lenght)
+        outputStream.write(str)                                 // Четвёртая строка
         outputStream.close()
     } else {
 
