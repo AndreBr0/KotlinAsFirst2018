@@ -244,4 +244,61 @@ fun fromRoman(roman: String): Int = TODO()
  * IllegalArgumentException должен бросаться даже если ошибочная команда не была достигнута в ходе выполнения.
  *
  */
-fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
+    if (commands.isNotEmpty() && commands.contains(Regex("""[^\s\-+<>\[\]]""")))
+        throw IllegalArgumentException()
+    var p1 = 0
+    var p2 = 0
+    for (i in commands) {
+        if (i == '[') p1++
+        if (i == ']') p2++
+        if (p2 > p1) throw IllegalArgumentException()
+    }
+    if (p1 != p2) throw IllegalArgumentException()
+    var pos = cells / 2
+    val list = mutableListOf<Int>()
+    for (i in 0 until cells)
+        list.add(i, 0)
+    var countcom = 0
+    var maxlim = 0
+    var pair = 0
+    while (commands.length > countcom && limit > maxlim) {
+        when (commands[countcom]) {
+            ' ' -> {}
+            '>' -> pos++
+            '<' -> pos--
+            '+' -> list[pos] += 1
+            '-' -> list[pos] -= 1
+            '[' -> {
+                if (list[pos] == 0) {
+                    while (pair >= 0) {
+                        countcom++
+                        if (commands[countcom] == ']')
+                            pair -= 1
+                        if (commands[countcom] == '[')
+                            pair += 1
+                    }
+                    pair = 0
+                }
+            }
+            ']' -> {
+                if (list[pos] != 0) {
+                    while (pair >= 0) {
+                        countcom--
+                        if (commands[countcom] == '[')
+                            pair -= 1
+
+                        if (commands[countcom] == ']')
+                            pair += 1
+                    }
+                    pair = 0
+                }
+            }
+        }
+        if (pos in 0 until cells) {
+            countcom++
+            maxlim++
+        } else throw IllegalStateException()
+    }
+    return list
+}
