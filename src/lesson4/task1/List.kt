@@ -377,10 +377,10 @@ fun russian(n: Int): String {
             otv = slovo6 + slovo5 + slovo4 + "тысяч " + slovo3 + slovo2 + slovo1
         } else otv = slovo6 + slovo5 + slovo4 + "тысяч"
     }
-    if (ne5 == 1) {
+    if ((ne5 == 1) || (ne4 != 0)) {
         if (slovo7 != "") {
-            otv = slovo6 + slovo5 + slovo4 + "тысяч " + slovo3 + slovo2 + slovo1
-        } else otv = slovo6 + slovo5 + slovo4 + "тысяч"
+            otv = slovo6 + slovo5 + "тысяч " + slovo3 + slovo2 + slovo1
+        } else otv = slovo6 + slovo5 + "тысяч"
     }
     if ((ne4 == 0) && (ne5 == 0) && (ne6 == 0)) {
         otv = slovo3 + slovo2 + slovo1
