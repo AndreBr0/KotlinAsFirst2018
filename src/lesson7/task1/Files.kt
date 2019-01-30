@@ -504,17 +504,25 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
 
     /** Рассматриваем отдельно вариант, res - однозначное число **/
     if (res < 10) {                                 // Просто сразу выписываем ответ в нужном формате
-        outputStream.write(" $lhv | $rhv")                      // Первая строка
-        outputStream.newLine()
-        val lenght = 1 + lhvs.length
-        var str = "-" + (rhv * res).toString()
-        str = str.padEnd(lenght + 3) + "$res"
+        var length = 0                              // Есть два "подслучая", от них зависит первая строка и длина следующих строк
+        if ((res * rhv).toString().length + 1 > lhvs.length) {      // 1) Когда длина (*) "-" и числа, которое мы вычитаем (по сути res * rhv)
+            outputStream.write(" $lhv | $rhv")                      // больше, чем длина делимого. Тогда длина следующих строк будет равна длине (*)
+            outputStream.newLine()                                  // А первая строка записывается с пробелом
+            length = 1 + lhvs.length
+        } else {
+            outputStream.write("$lhv | $rhv")                       // 2) Когда длина "-" и того, что вычитаем, >= длины (*) делимого
+            outputStream.newLine()                                  // Тогда мы не добавляем в первую строку лишний пробел перед lhv
+            length = lhvs.length                                    // А длина следующих строк будет равна длине (*)
+        }
+        var str = "-" + (rhv * res).toString()                  // Дальше действем по одинаковому алгоритму, всё будет зависеть только от lenght
+        str = str.padStart(length)
+        str = str.padEnd(length + 3) + "$res"
         outputStream.write(str)                                 // Вторая строка
         outputStream.newLine()
         str = "".padStart(max(lhvs.length, (rhv * res).toString().length + 1), '-')
         outputStream.write(str)                                 // Третья строка
         outputStream.newLine()
-        str = "$ost".padStart(lenght)
+        str = "$ost".padStart(length)
         outputStream.write(str)                                 // Четвёртая строка
         outputStream.close()
     } else {
