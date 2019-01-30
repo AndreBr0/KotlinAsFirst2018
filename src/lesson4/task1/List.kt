@@ -361,7 +361,7 @@ fun russian(n: Int): String {
     if (ne6 in 1..9) {
         slovo6 = n3[ne6].toString() + " "
     }
-    slovo7 = (slovo3 + slovo2 + slovo1)
+    slovo7 = (slovo3 + slovo2 + slovo1).trim()
     if (ne4 == 1) {
         if (slovo7 != "") {
             otv = slovo6 + slovo5 + slovo4 + "тысяча " + slovo3 + slovo2 + slovo1

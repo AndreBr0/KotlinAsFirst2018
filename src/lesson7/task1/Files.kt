@@ -497,6 +497,95 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+    val outputStream = File(outputName).bufferedWriter()
+    val res = lhv / rhv                     // результат от деления
+    val ost = lhv % rhv                     // остаток от деления
+    val lhvs = lhv.toString()               // lnh в виде строки
+
+    /** Рассматриваем отдельно вариант, res - однозначное число **/
+    if (res < 10) {
+        outputStream.write(" $lhv | $rhv")                  // Просто сразу выписываем ответ в нужном формате
+        outputStream.newLine()
+        val lenght = 1 + lhvs.length
+        var str = "-" + (rhv * res).toString()
+        str = str.padEnd(lenght + 3) + "$res"
+        outputStream.write(str)
+        outputStream.newLine()
+        str = "".padStart(max(lhvs.length, (rhv * res).toString().length + 1), '-')
+        outputStream.write(str)
+        outputStream.newLine()
+        outputStream.write(" $ost")
+        outputStream.close()
+    } else {
+
+        /** ЧАСТЬ 1 - вычисления **/
+        var num = 0
+        val ress = res.toString()                                       // ответ в виде строки
+        val list1 = mutableListOf<Int>()                                // список из промежуточных результатов
+        while (num != ress.length) {                                    // num - разряд ответа, номер промежуточного результата
+            num++
+            list1.add(ress[num - 1].toString().toInt() * rhv)           // разряд ответа * делитель
+        }
+
+        val listprob = mutableListOf<Int>()                                 // список с кол-вом пробелов, которые надо добавить после строки
+        val list2 = mutableListOf<String>()                                 // список из вычислений
+        num = 0
+        val chislo = lhv / 10.0.pow(ress.length - 1).toInt()                // ищем первое число, которое поделилось
+        var podstroka = lhvs.substring(lhvs.length - ress.length + 1)
+        val value = if (chislo - list1[num] == 0)                           // сохраняем 0 в начале, если он есть
+            0.toString() + podstroka[0].toString()                          // (именно поэтому list2 типа String)
+        else
+            ((chislo - list1[num]) * 10 + podstroka[0].toString().toInt()).toString()
+        list2.add(value)
+        listprob.add(podstroka.length)
+        num++
+        while (num != ress.length - 1) {                                      // вычисляем со 2-го до предпоследнего
+            podstroka = lhvs.substring(lhvs.length - ress.length + 1 + num)
+            val a = if ((list2[num - 1])[0].toString().toInt() == 0)          // убираем ноль в начале, если он есть,
+                list2[num - 1].substring(1).toInt()                           // чтобы можно было перевести в Int
+            else
+                list2[num - 1].toInt()
+            val value = if (a - list1[num] == 0)                              // сохраняем 0, если он получился при вычитании
+                0.toString() + podstroka[0].toString()
+            else
+                ((a - list1[num]) * 10 + podstroka[0].toString().toInt()).toString()
+            list2.add(value)
+            listprob.add(podstroka.length)
+            num++
+        }
+        list2.add(ost.toString())                         // последнее число - остаток
+        listprob.add(0)
+
+
+        /** ЧАСТЬ 2 - вывод в нужном формате **/
+        val lenght = 1 + lhvs.length                                // длина строк, начиная с 3-ей
+        outputStream.write(" $lhv | $rhv")                          // добавляем первую строку
+        outputStream.newLine()
+        var str = "-${list1[0]}"
+        str = str.padEnd(lenght + 3) + "$res"                       // добавляем вторую строку отдельно,
+        outputStream.write(str)                                     // потому что на этой же строке ещё и ответ
+        outputStream.newLine()
+        str = "".padEnd(list1[0].toString().length + 1, '-')        // добавляем третью строку отдельно,
+        outputStream.write(str)                                     // потому что её не загнать в цикл
+        outputStream.newLine()
+        for (i in 1 until ress.length) {                            // через цикл записываем строки тройками
+            str = list2[i - 1]
+            str = str.padStart(lenght - listprob[i])                // строка с остатком от вычитания и добавленный разрядом
+            outputStream.write(str)
+            outputStream.newLine()
+            str = "-${list1[i]}"                                    // строка с вычитаемым
+            str = str.padStart(lenght - listprob[i])
+            outputStream.write(str)
+            outputStream.newLine()
+            str = "".padStart(max(list1[i].toString().length + 1, list2[i - 1].length), '-')
+            str = str.padStart(lenght - listprob[i])                // строка с чёрточками
+            outputStream.write(str)
+            outputStream.newLine()
+        }
+
+        str = "$ost".padStart(lenght)                               // отдельно записываем остаток
+        outputStream.write(str)
+        outputStream.close()
+    }
 }
 

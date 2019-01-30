@@ -300,13 +300,13 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
                 cen[i][j] = maxOf(cen[i - 1][j], cen[i - 1][j - ves[i - 1]] + st[i - 1])
             else
                 cen[i][j] = cen[i - 1][j]
-    fun optimal(a: Int, b: Int) {
-        if (cen[a][b] == 0) return
-        if (cen[a - 1][b] == cen[a][b])
-            optimal(a - 1, b)
+    fun optimal(i: Int, j: Int) {
+        if (cen[i][j] == 0) return
+        if (cen[i - 1][j] == cen[i][j])
+            optimal(i - 1, j)
         else {
-            optimal(a - 1, b - ves[a - 1])
-            otv += zag[a - 1]
+            optimal(i - 1, j - ves[i - 1])
+            otv += zag[i - 1]
         }
     }
     optimal(treasures.size, capacity)
