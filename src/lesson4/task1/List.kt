@@ -339,9 +339,6 @@ fun russian(n: Int): String {
         ne2 = ne2 * 10 + ne1
         slovo2 = n2[ne2].toString()
     }
-    if ((ne2 in 2..9) && (ne1 == 0)) {
-        slovo2 = n2[ne2].toString()
-    }
     if (ne2 in 2..9) {
         slovo2 = n2[ne2].toString() + " "
     }
@@ -364,7 +361,10 @@ fun russian(n: Int): String {
     if (ne6 in 1..9) {
         slovo6 = n3[ne6].toString() + " "
     }
-    slovo7 = (slovo3 + slovo2 + slovo1).trim()
+    if (n % 10 == 0) {
+
+    }
+    slovo7 = slovo3 + slovo2 + slovo1
     if (ne4 == 1) {
         if (slovo7 != "") {
             otv = slovo6 + slovo5 + slovo4 + "тысяча " + slovo3 + slovo2 + slovo1
@@ -383,5 +383,5 @@ fun russian(n: Int): String {
     if ((ne4 == 0) && (ne5 == 0) && (ne6 == 0)) {
         otv = slovo3 + slovo2 + slovo1
     }
-    return otv
+    return otv.trim()
 }
