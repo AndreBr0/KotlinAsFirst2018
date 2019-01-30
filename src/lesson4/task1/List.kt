@@ -361,21 +361,23 @@ fun russian(n: Int): String {
     if (ne6 in 1..9) {
         slovo6 = n3[ne6].toString() + " "
     }
-    if (n % 10 == 0) {
-
-    }
     slovo7 = slovo3 + slovo2 + slovo1
-    if (ne4 == 1) {
+    if ((ne4 == 1) && (ne5 != 1)) {
         if (slovo7 != "") {
             otv = slovo6 + slovo5 + slovo4 + "тысяча " + slovo3 + slovo2 + slovo1
         } else otv = slovo6 + slovo5 + slovo4 + "тысяча"
     }
-    if (ne4 in 2..4) {
+    if ((ne4 in 2..4) && (ne5 != 1)) {
         if (slovo7 != "") {
             otv = slovo6 + slovo5 + slovo4 + "тысячи " + slovo3 + slovo2 + slovo1
         } else otv = slovo6 + slovo5 + slovo4 + "тысячи"
     }
     if ((ne4 in 5..9) || (ne4 == 0)) {
+        if (slovo7 != "") {
+            otv = slovo6 + slovo5 + slovo4 + "тысяч " + slovo3 + slovo2 + slovo1
+        } else otv = slovo6 + slovo5 + slovo4 + "тысяч"
+    }
+    if (ne5 == 1) {
         if (slovo7 != "") {
             otv = slovo6 + slovo5 + slovo4 + "тысяч " + slovo3 + slovo2 + slovo1
         } else otv = slovo6 + slovo5 + slovo4 + "тысяч"
