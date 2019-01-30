@@ -385,5 +385,6 @@ fun russian(n: Int): String {
     if ((ne4 == 0) && (ne5 == 0) && (ne6 == 0)) {
         otv = slovo3 + slovo2 + slovo1
     }
+
     return otv.trim()
 }
