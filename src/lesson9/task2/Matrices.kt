@@ -4,6 +4,7 @@ package lesson9.task2
 import lesson9.task1.Matrix
 import lesson9.task1.createMatrix
 
+
 // Все задачи в этом файле требуют наличия реализации интерфейса "Матрица" в Matrix.kt
 
 /**
@@ -104,7 +105,6 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 7 8 9      9 6 3
  */
 fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
-
 /**
  * Сложная
  *
@@ -118,7 +118,30 @@ fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
  * 1 2 3
  * 3 1 2
  */
-fun isLatinSquare(matrix: Matrix<Int>): Boolean = TODO()
+fun isLatinSquare(matrix: Matrix<Int>): Boolean {
+    val check = mutableSetOf<Int>()
+    if (matrix.width != matrix.height)
+        return false
+
+    for (column in 0 until matrix.width) {    //Столбцы
+        for (row in 0 until matrix.width)
+            check.add(matrix[row, column])
+        for (number in 1..matrix.width)
+            if (number !in check)
+                return false
+    }
+
+    for (column in 0 until matrix.width) {    //Строки
+        check.clear()
+        for (row in 0 until matrix.width)
+            check.add(matrix[column, row])
+        for (number in 1..matrix.width)
+            if (number !in check)
+                return false
+    }
+    return true
+}
+
 
 /**
  * Средняя

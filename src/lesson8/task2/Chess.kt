@@ -1,5 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson8.task2
+
+import kotlin.math.sign
 
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
@@ -22,7 +25,10 @@ data class Square(val column: Int, val row: Int) {
      * Для клетки не в пределах доски вернуть пустую строку
      */
     fun notation(): String = TODO()
+
+    fun move(difference: Pair<Int, Int>): Square = Square(column + difference.first, row + difference.second)
 }
+
 
 /**
  * Простая
@@ -31,7 +37,13 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = TODO()
+fun square(notation: String): Square {
+    if (Regex("""[a-h][1-8]""").matches(notation)) {
+        val column = notation[0] - 'a' + 1
+        val row = notation[1] - '0'
+        return Square(column, row)
+    } else throw IllegalArgumentException()
+}
 
 /**
  * Простая
@@ -155,7 +167,12 @@ fun kingMoveNumber(start: Square, end: Square): Int = TODO()
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun kingTrajectory(start: Square, end: Square): List<Square> {
+    return if (start == end) listOf(start)
+    else
+        listOf(start) + kingTrajectory(start.move((end.column - start.column).sign to (end.row - start.row).sign), end)
+}
+
 
 /**
  * Сложная
