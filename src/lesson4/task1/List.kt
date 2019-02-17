@@ -310,12 +310,11 @@ fun russian(n: Int): String {
     val hundred1 = numFromRussian(n / 1000, 1)
     val hundred2 = numFromRussian(n % 1000, 0)
     if (thousand != 0) {
-        if ((thousand % 100 in 10..19) || (thousand % 10 in 5..9) || (thousand % 10 == 0))
-            hundred1.add("тысяч")
-        if ((thousand % 10 == 1))
-            hundred1.add("тысяча")
-        if ((thousand % 10 in 2..4))
-            hundred1.add("тысячи")
+        when {
+            ((thousand % 100 in 10..19) || (thousand % 10 in 5..9) || (thousand % 10 == 0)) -> hundred1.add("тысяч")
+            ((thousand % 10 == 1)) -> hundred1.add("тысяча")
+            ((thousand % 10 in 2..4)) -> hundred1.add("тысячи")
+        }
     }
     return (hundred1 + hundred2).joinToString(separator = " ")
 }
