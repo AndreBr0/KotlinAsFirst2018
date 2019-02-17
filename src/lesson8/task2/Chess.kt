@@ -26,7 +26,7 @@ data class Square(val column: Int, val row: Int) {
      */
     fun notation(): String = TODO()
 
-    fun move(difference: Pair<Int, Int>): Square = Square(column + difference.first, row + difference.second)
+    fun add(i: Pair<Int, Int>): Square = Square(column + i.first, row + i.second)
 }
 
 
@@ -170,7 +170,7 @@ fun kingMoveNumber(start: Square, end: Square): Int = TODO()
 fun kingTrajectory(start: Square, end: Square): List<Square> {
     return if (start == end) listOf(start)
     else
-        listOf(start) + kingTrajectory(start.move((end.column - start.column).sign to (end.row - start.row).sign), end)
+        listOf(start) + kingTrajectory(start.add((end.column - start.column).sign to (end.row - start.row).sign), end)
 }
 
 
