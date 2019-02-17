@@ -123,6 +123,10 @@ fun bestLongJump(jumps: String): Int = TODO()
  */
 fun bestHighJump(jumps: String): Int {
     val k = jumps.split(" ")
+    for (j in 1 until k.size step 2) {
+        if (k[j - 1].contains(Regex("""[^0123456789]""")))
+            return -1
+    }
     val rez = mutableListOf<Int>()
     return if (Regex("""[\-\s\d%+]+""").matches(jumps)) {
         for (i in 1 until k.size step 2) {
@@ -131,8 +135,7 @@ fun bestHighJump(jumps: String): Int {
         }
         if (rez.isEmpty()) -1
         else rez.max()!!.toInt()
-    } else
-        -1
+    } else -1
 }
 /**
  * Сложная
