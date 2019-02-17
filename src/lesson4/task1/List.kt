@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+
 import kotlin.math.sqrt
 
 /**
@@ -265,126 +266,54 @@ fun roman(n: Int): String {
 /**
  * Очень сложная
  *
- * Записать заданное натуральное число 1..999999 прописью по-русски.
+ * Записать заданное натуральное число 1.999999 прописью по-русски.
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
+fun numFromRussian(number: Int, HundredOrNot: Int): MutableList<String> {
+    val res = mutableListOf<String>()
+    var number1 = number
+    val unit = listOf("один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val ten1 = listOf("десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать",
+            "пятнадцать", "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать")
+    val ten2 = listOf("двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят",
+            "семьдесят", "восемьдесят", "девяносто")
+    val hundreds = listOf("сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот",
+            "семьсот", "восемьсот", "девятьсот")
+    val special = listOf("", "одна", "две")
+    if (number1 / 100 > 0) {
+        res.add(hundreds[(number1 / 100) - 1])
+        number1 %= 100
+    }
+    if (number in 10..19)
+        return mutableListOf(ten1[number - 10])
+    if (number1 / 10 > 1) {
+        res.add(ten2[(number1 / 10) - 2])
+        number1 %= 10
+    }
+    if (number1 in 10..19) {
+        res.add(ten1[number1 - 10])
+        return res
+    }
+    if (HundredOrNot == 1) {
+        when (number1) {
+            in (1..2) -> res.add(special[number1])
+            in (3..9) -> res.add(unit[number1 - 1])
+        }
+        return res
+    }
+    if (number1 in 1..9) res.add(unit[number1 - 1])
+    return res
+}
 fun russian(n: Int): String {
-    val ne1 = n % 10
-    var ne2 = n / 10 % 10
-    val ne3 = n / 100 % 10
-    val ne4 = n / 1000 % 10
-    var ne5 = n / 10000 % 10
-    val ne6 = n / 100000
-    var slovo1 = ""
-    var slovo2 = ""
-    var slovo3 = ""
-    var slovo4 = ""
-    var slovo5 = ""
-    var slovo6 = ""
-    var slovo7 = ""
-    var otv = ""
-    val n1 = mapOf(
-            0 to "",
-            1 to "один",
-            2 to "два",
-            3 to "три",
-            4 to "четыре",
-            5 to "пять",
-            6 to "шесть",
-            7 to "семь",
-            8 to "восемь",
-            9 to "девять"
-    )
-    val n2 = mapOf(
-            0 to "",
-            10 to "десять",
-            11 to "одиннадцать",
-            12 to "двенадцать",
-            13 to "тринадцать",
-            14 to "четырнадцать",
-            15 to "пятнадцать",
-            16 to "шестнадцать",
-            17 to "семнадцать",
-            18 to "восемнадцать",
-            19 to "девятнадцать",
-            2 to "двадцать",
-            3 to "тридцать",
-            4 to "сорок",
-            5 to "пятьдесят",
-            6 to "шестьдесят",
-            7 to "семьдесят",
-            8 to "восемьдесят",
-            9 to "девяносто"
-    )
-    val n3 = mapOf(
-            0 to "",
-            1 to "сто",
-            2 to "двести",
-            3 to "триста",
-            4 to "четыреста",
-            5 to "пятьсот",
-            6 to "шестьсот",
-            7 to "семьсот",
-            8 to "восемьсот",
-            9 to "девятьсот"
-    )
-    val n4 = mapOf(
-            1 to "одна",
-            2 to "две")
-    if ((ne1 in 1..9) && (ne2 != 1)) {
-        slovo1 = n1[ne1].toString()
-    }
-    if ((ne2 * 10 + ne1) in 10..19) {
-        ne2 = ne2 * 10 + ne1
-        slovo2 = n2[ne2].toString()
-    }
-    if (ne2 in 2..9) {
-        slovo2 = n2[ne2].toString() + " "
-    }
-    if (ne3 in 1..9) {
-        slovo3 = n3[ne3].toString() + " "
-    }
-    if (ne4 in 1..2) {
-        slovo4 = n4[ne4].toString() + " "
-    }
-    if ((ne4 in 3..9 && (ne5 != 1))) {
-        slovo4 = n1[ne4].toString() + " "
-    }
-    if ((ne5 * 10 + ne4) in 10..19) {
-        ne5 = ne5 * 10 + ne4
-        slovo5 = n2[ne5].toString() + " "
-    }
-    if (ne5 in 2..9) {
-        slovo5 = n2[ne5].toString() + " "
-    }
-    if (ne6 in 1..9) {
-        slovo6 = n3[ne6].toString() + " "
-    }
-    slovo7 = slovo3 + slovo2 + slovo1
-    if ((ne4 == 1) && (ne5 != 1)) {
-        if (slovo7 != "") {
-            otv = slovo6 + slovo5 + slovo4 + "тысяча " + slovo3 + slovo2 + slovo1
-        } else otv = slovo6 + slovo5 + slovo4 + "тысяча"
-    }
-    if ((ne4 in 2..4) && (ne5 != 1)) {
-        if (slovo7 != "") {
-            otv = slovo6 + slovo5 + slovo4 + "тысячи " + slovo3 + slovo2 + slovo1
-        } else otv = slovo6 + slovo5 + slovo4 + "тысячи"
-    }
-    if ((ne4 in 5..9) || (ne4 == 0)) {
-        if (slovo7 != "") {
-            otv = slovo6 + slovo5 + slovo4 + "тысяч " + slovo3 + slovo2 + slovo1
-        } else otv = slovo6 + slovo5 + slovo4 + "тысяч"
-    }
-    if ((ne5 == 1) && (ne4 != 0)) {
-        if (slovo7 != "") {
-            otv = slovo6 + slovo5 + "тысяч " + slovo3 + slovo2 + slovo1
-        } else otv = slovo6 + slovo5 + "тысяч"
-    }
-    if ((ne4 == 0) && (ne5 == 0) && (ne6 == 0)) {
-        otv = slovo3 + slovo2 + slovo1
-    }
-
-    return otv.trim()
+    val thousand = n / 1000
+    val hundred1 = numFromRussian(n / 1000, 1)
+    val hundred2 = numFromRussian(n % 1000, 0)
+    if ((thousand % 100 in 10..19) || (thousand % 10 in 5..9) || (thousand % 10 == 0) && (thousand != 0))
+        hundred1.add("тысяч")
+    if ((thousand % 10 == 1) && (thousand != 0))
+        hundred1.add("тысяча")
+    if ((thousand % 10 in 2..4) && (thousand != 0))
+        hundred1.add("тысячи")
+    return (hundred1 + hundred2).joinToString(separator = " ")
 }
